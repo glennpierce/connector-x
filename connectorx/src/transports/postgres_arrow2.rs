@@ -57,6 +57,7 @@ macro_rules! impl_postgres_transport {
                 { UUID[Uuid]                 => LargeUtf8[String]           | conversion option }
                 { Char[&'r str]              => LargeUtf8[String]           | conversion none }
                 { ByteA[Vec<u8>]             => LargeBinary[Vec<u8>]        | conversion auto }
+                { JSON[serde_json::Value]    => LargeUtf8[String]           | conversion option }
             }
         );
     }
@@ -71,6 +72,12 @@ impl_postgres_transport!(CursorProtocol, MakeTlsConnector);
 
 impl<P, C> TypeConversion<Uuid, String> for PostgresArrow2Transport<P, C> {
     fn convert(val: Uuid) -> String {
+        val.to_string()
+    }
+}
+
+impl<P, C> TypeConversion<serde_json::Value, String> for PostgresArrow2Transport<P, C> {
+    fn convert(val: serde_json::Value) -> String {
         val.to_string()
     }
 }

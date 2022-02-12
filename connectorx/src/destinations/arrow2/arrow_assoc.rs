@@ -225,6 +225,40 @@ impl ArrowAssoc for Option<Date<Utc>> {
     }
 }
 
+impl ArrowAssoc for serde_json::Value {
+    type Builder = MutableUtf8Array<i64>;
+
+    fn builder(nrows: usize) -> Self::Builder {
+        MutableUtf8Array::<i64>::with_capacity(nrows)
+    }
+
+    #[inline]
+    fn push(builder: &mut Self::Builder, value: serde_json::Value) {
+        builder.push(Some(value.to_string()));
+    }
+
+    fn field(header: &str) -> Field {
+        Field::new(header, ArrowDataType::LargeUtf8, false)
+    }
+}
+
+impl ArrowAssoc for Option<serde_json::Value> {
+    type Builder = MutableUtf8Array<i64>;
+
+    fn builder(nrows: usize) -> Self::Builder {
+        MutableUtf8Array::with_capacity(nrows)
+    }
+
+    #[inline]
+    fn push(builder: &mut Self::Builder, value: Self) {
+        builder.push(value.map(|x| x.to_string()))
+    }
+
+    fn field(header: &str) -> Field {
+        Field::new(header, ArrowDataType::LargeUtf8, true)
+    }
+}
+
 fn naive_date_to_date32(nd: NaiveDate) -> i32 {
     (nd.and_hms(0, 0, 0).timestamp() / SECONDS_IN_DAY) as i32
 }
