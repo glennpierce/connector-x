@@ -43,7 +43,7 @@ contexttimer = "^0.3.3"
 dask = {extras = ["dataframe"], version = "^2021.7.0"}
 docopt = "^0.6.2"
 ipython = "^7.31.1"
-maturin = "^0.9.4"
+maturin = {version = ">=0.12,<0.13", extras = ["patchelf"]}
 modin = {extras = ["dask"], version = ">=0.10.1"}
 polars = ">=0.8"
 pyarrow = ">=4"
@@ -64,5 +64,5 @@ python_functions = "test_* bench_*"
 # ]
 
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry_core>=1.0.0"]
+requires = ["maturin>=0.12,<0.13"]
+build-backend = "maturin"
