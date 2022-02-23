@@ -55,8 +55,9 @@ jobs:
 
       - name: Build wheel
         uses: messense/maturin-action@v1
-        command: build
         with:
+          maturin-version: 0.12.1
+          command: build
           args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
@@ -118,8 +119,9 @@ jobs:
 
       - name: Build wheel
         uses: messense/maturin-action@v1
-        command: build
         with:
+          maturin-version: 0.12.1
+          command: build
           args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
@@ -181,8 +183,9 @@ jobs:
 
       - name: Build wheel
         uses: messense/maturin-action@v1
-        command: build
         with:
+          maturin-version: 0.12.1
+          command: build
           args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
