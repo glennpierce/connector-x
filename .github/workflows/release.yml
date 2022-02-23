@@ -55,22 +55,22 @@ jobs:
 
       - name: Build wheel
         run: |
-          just ci-build-python-wheel ci-rename-wheel
+          just ci-build-python-wheel
           echo "Built artifacts"
-          ls connectorx-python/dist
+          ls target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "linux-${{ matrix.python-version }}"
-          path: connectorx-python/dist/*.whl
+          path: target/wheels/*.whl
 
-      # - name: Persist artifacts source code
-      #   uses: actions/upload-artifact@v2
-      #   if: matrix.python-version == 39
-      #   with:
-      #     name: "linux-${{ matrix.python-version }}"
-      #     path: connectorx-python/dist/*.tar.gz
+      - name: Persist artifacts source code
+        uses: actions/upload-artifact@v2
+        if: matrix.python-version == 39
+        with:
+          name: "linux-${{ matrix.python-version }}"
+          path: target/wheels/*.tar.gz
 
   win32:
     runs-on: windows-latest
@@ -118,15 +118,15 @@ jobs:
 
       - name: Build wheel
         run: |
-          just ci-build-python-wheel ci-rename-wheel
+          just ci-build-python-wheel
           echo "Built artifacts"
-          ls connectorx-python/dist
+          ls target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "windows-${{ matrix.python-version }}"
-          path: connectorx-python/dist/*.whl
+          path: target/wheels/*.whl
 
   darwin:
     runs-on: macos-10.15
@@ -181,15 +181,15 @@ jobs:
 
       - name: Build wheel
         run: |
-          just ci-build-python-wheel ci-rename-wheel
+          just ci-build-python-wheel
           echo "Built artifacts"
-          ls connectorx-python/dist
+          ls target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "macos-${{ matrix.python-version }}"
-          path: connectorx-python/dist/*.whl
+          path: target/wheels/*.whl
 
   upload:
     runs-on: ubuntu-latest
