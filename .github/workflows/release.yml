@@ -54,10 +54,10 @@ jobs:
           ls connectorx-python/connectorx
 
       - name: Build wheel
-        run: |
-          just ci-build-python-wheel
-          echo "Built artifacts"
-          ls target/wheels
+        uses: messense/maturin-action@v1
+        command: build
+        with:
+          args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
@@ -117,10 +117,10 @@ jobs:
           SQLITE3_STATIC: 1
 
       - name: Build wheel
-        run: |
-          just ci-build-python-wheel
-          echo "Built artifacts"
-          ls target/wheels
+        uses: messense/maturin-action@v1
+        command: build
+        with:
+          args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
@@ -180,10 +180,10 @@ jobs:
           CPPFLAGS: "-I/usr/local/opt/openssl@3/include"
 
       - name: Build wheel
-        run: |
-          just ci-build-python-wheel
-          echo "Built artifacts"
-          ls target/wheels
+        uses: messense/maturin-action@v1
+        command: build
+        with:
+          args: -m connectorx-python/Cargo.toml
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2

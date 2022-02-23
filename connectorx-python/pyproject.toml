@@ -46,7 +46,7 @@ contexttimer = "^0.3.3"
 dask = {extras = ["dataframe"], version = "^2021.7.0"}
 docopt = "^0.6.2"
 ipython = "^7.31.1"
-maturin = {version = ">=0.12,<0.13", extras = ["patchelf"]}
+maturin = ">=0.12,<0.13"
 modin = {extras = ["dask"], version = ">=0.10.1"}
 polars = ">=0.8"
 pyarrow = ">=4"
