@@ -281,6 +281,7 @@ jobs:
           LDFLAGS: "-L/usr/local/opt/openssl@3/lib"
           CPPFLAGS: "-I/usr/local/opt/openssl@3/include"
           PKG_CONFIG_PATH: "/usr/local/opt/openssl@3/lib/pkgconfig"
+          PKG_CONFIG_SYSROOT_DIR: "/usr/local/opt/openssl@3/lib/pkgconfig"
 
       - name: List generated artifacts
         run: |

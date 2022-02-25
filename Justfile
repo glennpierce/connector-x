@@ -28,8 +28,8 @@ bootstrap-python:
 build-python-extention:
     cd connectorx-python && cargo build --release
 
-setup-python: build-python-extention
-    cd connectorx-python && poetry run python ../scripts/python-helper.py copy-extension
+setup-python:
+    cd connectorx-python && poetry run maturin develop
     
 test-python +opts="": setup-python
     cd connectorx-python && poetry run pytest connectorx/tests -v -s {{opts}}
