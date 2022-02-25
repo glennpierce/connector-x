@@ -57,7 +57,8 @@ pprof = {version = "0.5", features = ["flamegraph", "criterion", "protobuf"]}
 rayon = "1"
 
 [lib]
-crate-type = ["rlib", "cdylib"]
+# crate-type = ["rlib", "cdylib"]
+crate-type = ["cdylib"]
 name = "connectorx"
 
 [features]
