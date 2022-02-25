@@ -38,13 +38,13 @@ def main() -> None:
     if args["copy-extension"]:
         if METADATA["platform"] == "windows":
             suffix = ".dll"
-            src = Path("../target/release/connectorx")
+            src = Path("./target/release/connectorx")
         elif METADATA["platform"] == "linux":
             suffix = ".so"
-            src = Path("../target/release/libconnectorx")
+            src = Path("./target/release/libconnectorx")
         elif METADATA["platform"] == "darwin":
             suffix = ".dylib"
-            src = Path("../target/release/libconnectorx")
+            src = Path("./target/release/libconnectorx")
         else:
             raise NotImplementedError(f"platform '{METADATA['platform']}' not supported")
 
