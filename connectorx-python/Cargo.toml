@@ -4,6 +4,9 @@ edition = "2018"
 name = "connectorx-python"
 version = "0.2.4-alpha.11"
 
+[workspace]
+# prevents package from thinking it's in the workspace
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -55,7 +58,7 @@ rayon = "1"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
-name = "connectorx_python"
+name = "connectorx"
 
 [features]
 branch = ["connectorx/branch"]

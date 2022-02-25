@@ -12,7 +12,8 @@ jobs:
     container: quay.io/pypa/manylinux2014_x86_64
     strategy:
       matrix:
-        python-version: [37, 38, 39, 310]
+        # python-version: [37, 38, 39, 310]
+        python-version: [38]
     steps:
       - uses: actions/checkout@v2
 
@@ -49,50 +50,46 @@ jobs:
           SQLITE3_STATIC: 1
         run: |
           just bootstrap-python
-          just ci-build-python-extention
-          echo "Content of the source folder"
-          ls connectorx-python/connectorx
           cp README.md connectorx-python/README.md
           cp LICENSE connectorx-python/LICENSE
 
       - name: Build wheel
         uses: messense/maturin-action@v1
         with:
-          maturin-version: 0.12.1
+          maturin-version: v0.12.1
           command: build
           args: -m connectorx-python/Cargo.toml
 
       - name: Build wheel for arm
         uses: messense/maturin-action@v1
         with:
-          manylinux: '2_24'
-          target: aarch64-unknown-linux-gnu
-          maturin-version: 0.12.1
+          maturin-version: v0.12.1
           command: build
-          args: -m connectorx-python/Cargo.toml --no-sdist
+          args: -m connectorx-python/Cargo.toml --target aarch64-unknown-linux-gnu --no-sdist
         
-      - name: list generated artifacts
+      - name: List generated artifacts
         run: |
-          ls target/wheels
+          ls connectorx-python/target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "linux-${{ matrix.python-version }}"
-          path: target/wheels/*.whl
+          path: connectorx-python/target/wheels/*.whl
 
-      - name: Persist artifacts source code
-        uses: actions/upload-artifact@v2
-        if: matrix.python-version == 39
-        with:
-          name: "linux-${{ matrix.python-version }}"
-          path: target/wheels/*.tar.gz
+      # - name: Persist artifacts source code
+      #   uses: actions/upload-artifact@v2
+      #   if: matrix.python-version == 39
+      #   with:
+      #     name: "linux-${{ matrix.python-version }}"
+      #     path: connectorx-python/target/wheels/*.tar.gz
 
   win32:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        # python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8"]
     steps:
       - uses: actions/checkout@v2
 
@@ -126,9 +123,6 @@ jobs:
       - name: Setup project
         run: |
           just bootstrap-python
-          just ci-build-python-extention
-          echo "Content of the source folder"
-          ls connectorx-python/connectorx
           cp README.md connectorx-python/README.md
           cp LICENSE connectorx-python/LICENSE
         env:
@@ -137,25 +131,26 @@ jobs:
       - name: Build wheel
         uses: messense/maturin-action@v1
         with:
-          maturin-version: 0.12.1
+          maturin-version: v0.12.1
           command: build
           args: -m connectorx-python/Cargo.toml --no-sdist
 
-      - name: list generated artifacts
+      - name: List generated artifacts
         run: |
-          ls target/wheels
+          ls connectorx-python/target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "windows-${{ matrix.python-version }}"
-          path: target/wheels/*.whl
+          path: connectorx-python/target/wheels/*.whl
 
   darwin:
     runs-on: macos-10.15
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        # python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8"]
     steps:
       - uses: actions/checkout@v2
 
@@ -194,9 +189,6 @@ jobs:
       - name: Setup project
         run: |
           just bootstrap-python
-          just ci-build-python-extention
-          echo "Content of the source folder"
-          ls connectorx-python/connectorx
           cp README.md connectorx-python/README.md
           cp LICENSE connectorx-python/LICENSE
         env:
@@ -207,25 +199,26 @@ jobs:
       - name: Build wheel
         uses: messense/maturin-action@v1
         with:
-          maturin-version: 0.12.1
+          maturin-version: v0.12.1
           command: build
           args: -m connectorx-python/Cargo.toml --no-sdist
 
-      - name: list generated artifacts
+      - name: List generated artifacts
         run: |
-          ls target/wheels
+          ls connectorx-python/target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "macos-${{ matrix.python-version }}"
-          path: target/wheels/*.whl
+          path: connectorx-python/target/wheels/*.whl
 
   apple_arm:
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        # python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8"]
     steps:
       - uses: actions/checkout@v2
 
@@ -236,7 +229,7 @@ jobs:
       - name: Install brew
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install openssl
+          brew install openssl pkg-config
 
       - name: Setup python
         uses: actions/setup-python@v2
@@ -267,9 +260,6 @@ jobs:
       - name: Setup project
         run: |
           just bootstrap-python
-          just ci-build-python-extention
-          echo "Content of the source folder"
-          ls connectorx-python/connectorx
           cp README.md connectorx-python/README.md
           cp LICENSE connectorx-python/LICENSE
         env:
@@ -280,19 +270,19 @@ jobs:
       - name: Build wheel
         uses: messense/maturin-action@v1
         with:
-          maturin-version: 0.12.1
+          maturin-version: v0.12.1
           command: build
           args: -m connectorx-python/Cargo.toml --target aarch64-apple-darwin --no-sdist
 
-      - name: list generated artifacts
+      - name: List generated artifacts
         run: |
-          ls target/wheels
+          ls connectorx-python/target/wheels
 
       - name: Persist artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "macos-${{ matrix.python-version }}"
-          path: target/wheels/*.whl
+          path: connectorx-python/target/wheels/*.whl
 
   upload:
     runs-on: ubuntu-latest
