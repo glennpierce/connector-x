@@ -12,7 +12,7 @@ version = "0.2.4-alpha.11"
 [dependencies]
 anyhow = "1"
 arrow = "6.4.0"
-arrow2 = {git = "https://github.com/jorgecarleitao/arrow2", rev = "dc516495a5a49ae41d3c68caab4e33dd57337640", default-features = false}
+arrow2 = { package = "arrow2", git = "https://github.com/ritchie46/arrow2", branch = "csv_write", default-features = false, optional = true }
 bitfield = "0.13"
 bytes = "1"
 chrono = "0.4"
